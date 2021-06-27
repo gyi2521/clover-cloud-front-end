@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import TimeLog from "./TimeLog";
-import {
-  Button,
-  TextField,
-  Typography,
-  Select,
-  MenuItem,
-  InputLabel,
-} from "@material-ui/core";
+import { Button, TextField, Typography } from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,

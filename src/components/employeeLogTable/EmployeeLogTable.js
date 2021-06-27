@@ -5,17 +5,9 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableSortLabel,
-  TableContainer,
   TableHead,
-  Typography,
   TableRow,
-  Paper,
-  TextField,
-  TablePagination,
 } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { getWeekYearWithOptions } from "date-fns/fp";
 
 const useStyles = makeStyles((theme) => ({
   table: {
