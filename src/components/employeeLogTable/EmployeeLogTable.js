@@ -7,7 +7,11 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Button,
+  IconButton,
 } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -18,9 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DisplayTable = () => {
+const DisplayTable = ({ updateTableDataView }) => {
   const classes = useStyles();
   const [tableData, setTableData] = useState([]);
+  const [updatedDB, setUpdatedDB] = useState(new Date());
 
   let employeeId = 2;
   const getUserData = (employeeId) => {
@@ -35,14 +40,26 @@ const DisplayTable = () => {
             id: doc.logId,
             Project: doc.projectName,
             Category: doc.categoryName,
-            //Date: convertDate(doc.timeStamp),
-            Date: doc.timeStamp,
+
+            Date: doc.timestamp,
             TimeSpent: convertToHours(doc.timeSpent),
           });
         });
         setTableData(tempData);
       })
       .catch((err) => console.log("There is no data!"));
+  };
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`/log/${id}`)
+      // db.collection('projects').doc(selectedObject.id).delete()
+      .then((res) => {
+        console.log(res);
+        setUpdatedDB(new Date());
+        updateTableDataView("deleted!");
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -55,17 +72,18 @@ const DisplayTable = () => {
 
   const convertDate = (date) => {
     let displayDate = new Date(date);
-    let mm = displayDate.getMonth() + 1;
-    let dd = displayDate.getDate();
-    let yyyy = displayDate.getFullYear();
-    let tt = displayDate.toLocaleTimeString();
-    if (mm < 10) {
-      mm = `0${mm}`;
-    }
-    if (dd < 10) {
-      dd = `0${dd}`;
-    }
-    return (displayDate = `${mm}/${dd}/${yyyy}@${tt}`);
+    // let mm = displayDate.getMonth() + 1;
+    // let dd = displayDate.getDate();
+    // let yyyy = displayDate.getFullYear();
+    // let tt = displayDate.toLocaleTimeString();
+    // if (mm < 10) {
+    //   mm = `0${mm}`;
+    // }
+    // if (dd < 10) {
+    //   dd = `0${dd}`;
+    // }
+    // return (displayDate = `${mm}/${dd}/${yyyy}@${tt}`);
+    return displayDate.getUTCHours();
   };
 
   const convertToHours = (num) => {
@@ -82,6 +100,7 @@ const DisplayTable = () => {
           <TableCell>Category</TableCell>
           <TableCell>Date</TableCell>
           <TableCell>TimeSpent</TableCell>
+          <TableCell>Action</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -91,8 +110,11 @@ const DisplayTable = () => {
               {obj.Project}
             </TableCell>
             <TableCell>{obj.Category}</TableCell>
-            <TableCell>date{obj.Date}</TableCell>
+            <TableCell>{obj.Date}</TableCell>
             <TableCell>{obj.TimeSpent}</TableCell>
+            <IconButton id="edit" onClick={() => handleDelete(obj.id)}>
+              <DeleteIcon />
+            </IconButton>
           </TableRow>
         ))}
       </TableBody>

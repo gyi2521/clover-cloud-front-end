@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles, Paper, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import ProjectTimeLog from "../components/projectTimeLog/ProjectTimeLog";
-import DisplayTable from "../components/employeeLogTable/EmployeeLogTable";
+import DisplayTable from "../components/adminDashboard/Project";
 import ClientLogo from "../images/techtab-logo.png";
+//import DisplayTable from "../components/employeeLogTable/EmployeeLogTable";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EmployeeDashboard() {
+export default function AdminDashboard() {
   const classes = useStyles();
 
   const [refreshPage, setRefreshPage] = useState(new Date());
@@ -41,20 +41,20 @@ export default function EmployeeDashboard() {
           <br />
           <br />
           <Typography variant="h4" color="textPrimary" align="center">
-            Employee Dashboard
+            Admin Dashboard
           </Typography>
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <Paper variant="outlined" square={false} className={classes.paper}>
-            <ProjectTimeLog updateTableDataView={handleUpdateTableDataView} />
+            <DisplayTable />
           </Paper>
         </Grid>
-        <Grid item xs={8}>
+        {/* <Grid item xs={8}>
           <Paper variant="outlined" className={classes.paper}>
             <DisplayTable updateTableDataView={handleUpdateTableDataView} />
           </Paper>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}></Grid>
       </Grid>
     </div>

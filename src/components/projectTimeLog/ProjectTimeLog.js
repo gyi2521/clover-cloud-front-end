@@ -9,9 +9,7 @@ import {
 } from "@material-ui/pickers";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-axios.defaults.baseURL = "http://localhost:8143/";
-
-const ProjectTimeLog = () => {
+const ProjectTimeLog = ({ updateTableDataView }) => {
   const [selectedProject, setSelectedProject] = useState("");
   const [selectedProjectId, setSelectedProjectId] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -51,6 +49,7 @@ const ProjectTimeLog = () => {
         setSelectedProject("");
         setEnteredHours(0);
         setEnteredMins(0);
+        updateTableDataView("working!");
       })
       .catch((err) => console.log("something went wrong client side:", err));
   };
